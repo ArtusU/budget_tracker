@@ -12,13 +12,27 @@ import {
 import { Delete, MoneyOff } from "@material-ui/icons";
 
 import useStyles from "./styles";
+import { ExpenseTrackerContext } from "../../../context/context";
 
 const List = () => {
   const classes = useStyles();
+  const { deleteTransaction } = useContext(ExpenseTrackerContext);
 
   const transactions = [
-    { id: 1, type: "Income", category: "Bussines", amount: 39000, date: new Date() },
-    { id: 2, type: "Expense", category: "Service", amount: 120, date: new Date() },
+    {
+      id: 1,
+      type: "Income",
+      category: "Bussines",
+      amount: 39000,
+      date: new Date(),
+    },
+    {
+      id: 2,
+      type: "Expense",
+      category: "Service",
+      amount: 120,
+      date: new Date(),
+    },
   ];
 
   return (
@@ -43,7 +57,10 @@ const List = () => {
                 <MoneyOff />
               </Avatar>
             </ListItemAvatar>
-            <ListItemText primary={transaction.category} secondary={`$${transaction.amount} - ${transaction.date}`}/>
+            <ListItemText
+              primary={transaction.category}
+              secondary={`$${transaction.amount} - ${transaction.date}`}
+            />
             <ListItemSecondaryAction>
               <IconButton edge="end" aria-label="delete">
                 <Delete />
