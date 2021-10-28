@@ -13,6 +13,11 @@ import { v4 as uuidv4 } from "uuid";
 
 import { useSpeechContext } from "@speechly/react-client";
 import { ExpenseTrackerContext } from "../../../context/context";
+import {
+  incomeCategories,
+  expenseCategories,
+} from "../../../constants/categories";
+import formatDate from '../../../utils/formatDate'
 
 import useStyles from "./styles";
 
@@ -20,7 +25,7 @@ const initialState = {
   amount: "",
   category: "",
   type: "Income",
-  date: new Date(),
+  date: formatDate(new Date()),
 };
 
 const NewTransactionForm = () => {
@@ -37,6 +42,9 @@ const NewTransactionForm = () => {
     addTransaction(transaction);
     setFormData(initialState);
   };
+
+  const selectedCategories =
+    formData.type === "Income" ? incomeCategories : expenseCategories;
 
   return (
     <Grid container spacing={2}>
@@ -68,9 +76,11 @@ const NewTransactionForm = () => {
               setFormData({ ...formData, category: e.target.value })
             }
           >
-            <MenuItem value="1">1</MenuItem>
-            <MenuItem value="2">2</MenuItem>
-            <MenuItem value="3">3</MenuItem>
+            {selectedCategories.map((c) => (
+              <MenuItem key={c.type} value={c.type}>
+                {c.type}
+              </MenuItem>
+            ))}
           </Select>
         </FormControl>
       </Grid>
@@ -90,7 +100,7 @@ const NewTransactionForm = () => {
           label="Date"
           fullWidth
           value={formData.date}
-          onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+          onChange={(e) => setFormData({ ...formData, date: formatDate(e.target.value) })}
         />
       </Grid>
       <Button
