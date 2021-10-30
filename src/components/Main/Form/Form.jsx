@@ -6,6 +6,7 @@ import {
   Button,
   FormControl,
   InputLabel,
+  OutlinedInput,
   Select,
   MenuItem,
 } from "@material-ui/core";
@@ -17,12 +18,12 @@ import {
   incomeCategories,
   expenseCategories,
 } from "../../../constants/categories";
-import formatDate from '../../../utils/formatDate'
+import formatDate from "../../../utils/formatDate";
 
 import useStyles from "./styles";
 
 const initialState = {
-  amount: "",
+  amount: 0,
   category: "",
   type: "Income",
   date: formatDate(new Date()),
@@ -32,6 +33,7 @@ const NewTransactionForm = () => {
   const { addTransaction } = useContext(ExpenseTrackerContext);
   const classes = useStyles();
   const [formData, setFormData] = useState(initialState);
+  const { segment } = useSpeechContext();
 
   const createTransaction = () => {
     const transaction = {
@@ -49,11 +51,13 @@ const NewTransactionForm = () => {
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
-        <Typography
-          align="center"
-          variant="subtitle2"
-          gutterBottom
-        ></Typography>
+        <Typography align="center" variant="subtitle2" gutterBottom>
+          {segment ? (
+            <div className="segment">
+              {segment.words.map((w) => w.value).join(" ")}
+            </div>
+          ) : null}
+        </Typography>
       </Grid>
       <Grid item xs={6}>
         <FormControl fullWidth>
@@ -84,14 +88,16 @@ const NewTransactionForm = () => {
           </Select>
         </FormControl>
       </Grid>
-
       <Grid item xs={6}>
         <TextField
           type="number"
           label="Amount"
           fullWidth
           value={formData.amount}
-          onChange={(e) => setFormData({ ...formData, amount: e.target.value })}
+          onChange={(e) =>
+            setFormData({ ...formData, amount: Number(e.target.value) })
+          }
+          // onChange={(e) => setFormData({ ...formData, amount: parseInt(e.target.value) })}
         />
       </Grid>
       <Grid item xs={6}>
@@ -100,7 +106,9 @@ const NewTransactionForm = () => {
           label="Date"
           fullWidth
           value={formData.date}
-          onChange={(e) => setFormData({ ...formData, date: formatDate(e.target.value) })}
+          onChange={(e) =>
+            setFormData({ ...formData, date: formatDate(e.target.value) })
+          }
         />
       </Grid>
       <Button

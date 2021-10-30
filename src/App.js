@@ -1,5 +1,12 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { Grid } from "@material-ui/core";
+
+import { SpeechState, useSpeechContext } from "@speechly/react-client";
+import {
+  PushToTalkButton,
+  PushToTalkButtonContainer,
+  ErrorPanel
+} from "@speechly/react-ui";
 
 import useStyles from "./styles";
 
@@ -28,6 +35,10 @@ const App = () => {
         <Grid item xs={12} sm={4} className={classes.last}>
           <Details title="Expense" />
         </Grid>
+        <PushToTalkButtonContainer>
+          <PushToTalkButton />
+          <ErrorPanel />
+        </PushToTalkButtonContainer>
       </Grid>
     </div>
   );
