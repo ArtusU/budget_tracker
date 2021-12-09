@@ -1,7 +1,7 @@
 # Demo version
 [Budget Tracker](https://artus-budget-manager.netlify.app/).
 
-![image](https://drive.google.com/uc?export=view&id=158zhXzoXgrpuiIvHwEH5jBoDO1yummXouZ2xgkIcLBg)
+
 
 # Getting Started with Create React App
 
